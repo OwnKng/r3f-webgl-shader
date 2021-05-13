@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css"
+import Circle from "./Circle"
+import { Suspense } from "react"
+import { Canvas } from "@react-three/fiber"
+import { NoToneMapping } from "three/src/Three"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Canvas
+        camera={{ fov: 75, position: [0, -4, 10] }}
+        onCreated={({ gl }) => {
+          gl.toneMapping = NoToneMapping
+        }}
+      >
+        <Suspense fallback={null}>
+          <color attach='background' args={["#151B26"]} />
+          <ambientLight intensity={0.1} />
+          <directionalLight color='red' position={[0, 0, 5]} />
+          <Circle />
+        </Suspense>
+      </Canvas>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
